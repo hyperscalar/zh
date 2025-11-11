@@ -157,7 +157,7 @@
       </tags>
   </entry>
   <entry>
-    <title>如何仅通过本地缓存就将数据库查询量级从 71.7 万 / 秒降至 1.4 万 / 秒</title>
+    <title>如何仅通过本地缓存就将数据库查询量级从 71.7 万/秒降至 1.4 万/秒</title>
     <url>/zh/posts/Locality-of-Reference-and-Cache/</url>
     <content><![CDATA[<blockquote>
 <p>原标题：利用空间局部性原理大幅优化数据库查询量级</p>
@@ -191,16 +191,16 @@
     <tbody><tr>
         <th></th>
         <th>低功耗核心 (Icestorm)</th>
-        <th> 高性能核心 (Firestorm)</th>
+        <th>高性能核心 (Firestorm)</th>
     </tr>
     <tr>
         <th>L1 指令</th>
-        <td> 128 KB x 4</td>
+        <td>128 KB x 4</td>
         <td>192 KB x 4</td>
     </tr>
     <tr>
         <th>L1 数据</th>
-        <td> 64 KB x 4</td>
+        <td>64 KB x 4</td>
         <td>128 KB x 4</td>
     </tr>
     <tr>
@@ -291,7 +291,7 @@
 <p>最终，两个思路殊途同归，都指向一点：<strong>缓存的数据加载粒度 &gt; 缓存的数据查询粒度</strong>。也就是我们前面所提到的 CPU 高速缓存中缓存行设计所体现的思路，以此来尝试挖掘状态数据查询请求的空间局部性。</p>
 <p><strong>表的主键结构以及缓存加载策略</strong></p>
 <p>由于 Lindorm 数据库中的状态表的主键（相当于 HBase 中的 Rowkey）的构成是：（用户 ID，有向无环图 ID，顶点 ID），即：(userld, graphld, vertexld)。同时 Lindrom 同 HBase 一样支持最左前缀匹配的范围查询。</p>
-<p>要实现 “缓存的数据加载粒度&gt; 缓存的数据查询粒度”，有两种选择：</p>
+<p>要实现 “缓存的数据加载粒度 &gt; 缓存的数据查询粒度”，有两种选择：</p>
 <ol>
 <li><strong>缓存加载粒度：(userld, graphld)</strong>。查询某个用户在某个有向无环图中的某个顶点的状态数据，将会触发将这个用户在这个有向无环图中的所有顶点的状态数据都一并加载到缓存中。</li>
 <li><strong>缓存加载粒度：(userld)</strong>。查询某个用户在某个有向无环图中的某个顶点的状态数据，将会触发将这个用户在所有有向无环图中的所有顶点的状态数据都一并加载到缓存中。</li>
@@ -311,28 +311,28 @@
 </thead>
 <tbody>
 <tr>
-<td> (userld, graphld, vertexld)</td>
-<td> 一行</td>
+<td>(userld, graphld, vertexld)</td>
+<td>一行</td>
 <td>小</td>
 <td>低</td>
 <td>无</td>
 <td>小</td>
 </tr>
 <tr>
-<td> (userld, graphld)</td>
-<td> 相邻多行</td>
+<td>(userld, graphld)</td>
+<td>相邻多行</td>
 <td>中</td>
 <td>中</td>
 <td>中</td>
 <td>中</td>
 </tr>
 <tr>
-<td> (userld)</td>
-<td> 相邻多行</td>
+<td>(userld)</td>
+<td>相邻多行</td>
 <td>大</td>
 <td>高</td>
 <td>高</td>
-<td>大 </td>
+<td>大</td>
 </tr>
 </tbody>
 </table>
@@ -353,16 +353,16 @@
 <tr>
 <td>(userld, graphld, vertexld)</td>
 <td>6.8 万 / 秒</td>
-<td> 6.8 万 / 秒</td>
-<td> 1 毫秒 / 次</td>
-<td> 1 毫秒 / 次</td>
+<td>6.8 万 / 秒</td>
+<td>1 毫秒 / 次</td>
+<td>1 毫秒 / 次</td>
 </tr>
 <tr>
-<td> (userld, graphld)</td>
+<td>(userld, graphld)</td>
 <td>6.8 万 / 秒</td>
-<td> 1.6 万 / 秒</td>
-<td> 1.5 毫秒 / 次</td>
-<td> 0.35 毫秒 / 次</td>
+<td>1.6 万 / 秒</td>
+<td>1.5 毫秒 / 次</td>
+<td>0.35 毫秒 / 次</td>
 </tr>
 </tbody>
 </table>
@@ -388,25 +388,25 @@
 </thead>
 <tbody>
 <tr>
-<td> (userld, graphld, vertexld)</td>
+<td>(userld, graphld, vertexld)</td>
 <td>6.8 万 / 秒</td>
-<td> 6.8 万 / 秒</td>
-<td> 1 毫秒 / 次</td>
-<td> 1 毫秒 / 次</td>
+<td>6.8 万 / 秒</td>
+<td>1 毫秒 / 次</td>
+<td>1 毫秒 / 次</td>
 </tr>
 <tr>
-<td> (userld, graphld)</td>
+<td>(userld, graphld)</td>
 <td>6.8 万 / 秒</td>
-<td> 1.6 万 / 秒</td>
-<td> 1.5 毫秒 / 次</td>
-<td> 0.35 毫秒 / 次</td>
+<td>1.6 万 / 秒</td>
+<td>1.5 毫秒 / 次</td>
+<td>0.35 毫秒 / 次</td>
 </tr>
 <tr>
-<td> (userld)</td>
+<td>(userld)</td>
 <td>6.8 万 / 秒</td>
-<td> 0.28 万 / 秒</td>
-<td> 3.9 毫秒 / 次</td>
-<td> 0.16 毫秒 / 次</td>
+<td>0.28 万 / 秒</td>
+<td>3.9 毫秒 / 次</td>
+<td>0.16 毫秒 / 次</td>
 </tr>
 </tbody>
 </table>
@@ -431,20 +431,20 @@
 </thead>
 <tbody>
 <tr>
-<td> 上线</td>
-<td> (userld)</td>
+<td>上线</td>
+<td>(userld)</td>
 <td>6.8 万 / 秒</td>
-<td> 0.28 万 / 秒</td>
-<td> 3.9 毫秒 / 次</td>
-<td> 0.16 毫秒 / 次</td>
+<td>0.28 万 / 秒</td>
+<td>3.9 毫秒 / 次</td>
+<td>0.16 毫秒 / 次</td>
 </tr>
 <tr>
 <td>现在</td>
-<td> (userld)</td>
+<td>(userld)</td>
 <td>71.7 万 / 秒</td>
-<td> 1.4 万 / 秒</td>
-<td> 1.17 毫秒 / 次</td>
-<td> 0.02 毫秒 / 次</td>
+<td>1.4 万 / 秒</td>
+<td>1.17 毫秒 / 次</td>
+<td>0.02 毫秒 / 次</td>
 </tr>
 </tbody>
 </table>
@@ -479,7 +479,7 @@
 <ul>
 <li>状态缓存的单机峰值利用率在 600 项左右，并不大，且距离 2048 的最大项数还有一定距离。</li>
 <li>通过状态数据库表的批量查询监控观察到，批量查询的最大数据量在 12 条 / 批左右，且长期保持稳定，不存在任何尖刺。同时，从策略平台这个场景出发，也极不可能出现单用户名下数据量超多的情形。</li>
-<li>单机的 GC 表现在 JDK 21 + G1 GC 的加持下，GC 频次在 2-5 次 / 分钟，GC 累计耗时在 40-130 毫秒 / 分钟（不是单次 GC 耗时），并且全是 Young GC。</li>
+<li>单机的 GC 表现在 JDK 21 + G1 GC 的加持下，GC 频次在 2-5 次/分钟，GC 累计耗时在 40-130 毫秒/分钟（不是单次 GC 耗时），并且全是 Young GC。</li>
 <li>单机 4 GiB 的堆内存，经过 Young GC 后能够下探到 20% 左右的水位。</li>
 </ul>
 <p>即各项指标都处于非常健康的水平。</p>
@@ -527,8 +527,8 @@
 <p>Safety requirements for consensus / 一致性算法的基本要求:</p>
 <ul>
 <li><strong>1 / 约束 1: Only a value that has been proposed may be chosen / 只能通过已经被提出的值</strong></li>
-<li><strong> 2 / 约束 2: Only a single value is chosen / 只能通过单个值</strong></li>
-<li><strong> 3 / 约束 3: A process never learns that a value has been chosen unless it actually has been / 只能了解已经被通过的值</strong></li>
+<li><strong>2 / 约束 2: Only a single value is chosen / 只能通过单个值</strong></li>
+<li><strong>3 / 约束 3: A process never learns that a value has been chosen unless it actually has been / 只能了解已经被通过的值</strong></li>
 </ul>
 </li>
 <li>
@@ -642,9 +642,9 @@ information even if it fails and then restarts. / 经过上面的优化以后，
 <p>Requirements for the algorithm / 算法的约束:</p>
 <ul>
 <li>1 / 约束 1: <strong>Only a value that has been proposed may be chosen / 只能通过已经被提出的值</strong></li>
-<li> 2 / 约束 2: <strong>Only a single value is chosen / 只能通过单个值</strong></li>
-<li> 3 / 约束 3: <strong>A process never learns that a value has been chosen unless it actually has been / 只能了解已经被通过的值</strong></li>
-<li> P1a / 约束 P1a: <strong>An acceptor can accept a proposal numbered n iff it has not responded to a prepare request having a number greater than n. / 当且仅当一位议员没有响应过序号大于 n 的准备请求时，该议员才能赞成序号为 n 的议案。</strong></li>
+<li>2 / 约束 2: <strong>Only a single value is chosen / 只能通过单个值</strong></li>
+<li>3 / 约束 3: <strong>A process never learns that a value has been chosen unless it actually has been / 只能了解已经被通过的值</strong></li>
+<li>P1a / 约束 P1a: <strong>An acceptor can accept a proposal numbered n iff it has not responded to a prepare request having a number greater than n. / 当且仅当一位议员没有响应过序号大于 n 的准备请求时，该议员才能赞成序号为 n 的议案。</strong></li>
 <li>P2c / 约束 P2c: <strong>For any v and n, if a proposal with value v and number n is issued, then there is a set S consisting of a majority of acceptors such that either (a) no acceptor in S has accepted any proposal numbered less than n, or (b) v is the value of the highest-numbered proposal among all proposals numbered less than n accepted by the acceptors in S. / 对于任意的 v 和 n，如果一份值为 v 序号为 n 的议案被发起，那么就存在一个由多数议员构成的集合 S 满足下列条件之一：(a) 集合 S 中没有任何一个议员赞成了任何序号小于 n 的议案；(b) v 是集合 S 中的议员所赞成的所有序号小于 n 的议案中序号最大的那一份议案所包含的值。</strong></li>
 </ul>
 <p>Properties of the algorithm / 算法的特性:</p>
@@ -888,7 +888,7 @@ information even if it fails and then restarts. / 经过上面的优化以后，
 <p>作者：John L. Hennessy，David A. Patterson</p>
 </li>
 <li>
-<p>《计算机组成与设计：硬件、软件接口》（Computer Organization and Design: The Hardware/Software Interface）</p>
+<p>《计算机组成与设计：硬件、软件接口》（Computer Organization and Design: The Hardware / Software Interface）</p>
 <p>作者：David A. Patterson，John L. Hennessy</p>
 </li>
 </ul>
@@ -925,6 +925,16 @@ information even if it fails and then restarts. / 经过上面的优化以后，
   <entry>
     <title>分类</title>
     <url>/zh/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>论文</title>
+    <url>/zh/papers/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/zh/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -1129,15 +1139,5 @@ information even if it fails and then restarts. / 经过上面的优化以后，
 </li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>论文</title>
-    <url>/zh/papers/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/zh/tags/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
